@@ -119,11 +119,7 @@ func (txn *MvccTxn) GetValue(key []byte) ([]byte, error) {
 		return nil, nil
 	}
 	if write.Kind == WriteKindPut {
-		value, err := txn.Reader.GetCF(engine_util.CfDefault, EncodeKey(key, write.StartTS))
-		if err != nil {
-			return nil, err
-		}
-		return value, nil
+		return txn.Reader.GetCF(engine_util.CfDefault, EncodeKey(key, write.StartTS))
 	}
 	return nil, nil
 }
